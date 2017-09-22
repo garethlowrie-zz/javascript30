@@ -60,15 +60,33 @@
       width:50%;
       height:6px;
       background:black;
-      position: absolute;
+      position: absolute;                                   
       top:50%;
+      transform: rotate(90deg);                                     /* Changing starting position of hands (12:00) */
+      transform-origin: 100%;                                       /* Change transform origin to be 100% along the x axis of the hand, i.e right hand side/centre of clock */
+      transition: all 0.5s;                                         /* Transition all CSS properties, set duration to 0.5s */
+      transition-timing-function: cubic-bezier(0, 2.25, 0.58, 1);   /* The speed curve of the transition effect, allows propertys transition to change speed over its duration  */
     }
 
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
+    function setDate(){
+      const now = new Date();                                          /* Get SysDate */
+      const secondsDegrees = ((now.getSeconds() / 60) * 360) + 90;     /* Get Seconds in Degrees */
+      const minutesDegrees = ((now.getMinutes() / 60) * 360) + 90;     /* Get Minutes in Degrees */
+      const HoursDegrees = ((now.getHours() / 12) * 360) + 90;         /* Get Hours in Degrees */
 
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;     /* Rotate Second Hand */
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;     /* Rotate Minute Hand */
+      hourHand.style.transform = `rotate(${HoursDegrees}deg)`;         /* Rotate Hour Hand */
+    }
+
+    setInterval(setDate, 1000);                                        /* Call setDate every second / 1000ms */
   </script>
 </body>
 </html>

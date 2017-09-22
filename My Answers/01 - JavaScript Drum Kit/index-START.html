@@ -58,6 +58,25 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+ function playSound(e){
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);  // Get the corresponding audio element for the key ressed.
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);     // Get the corresponding div displayed on page.
+    console.log(key);
+    if(!audio) return; // Stop the function from running if no audio element found with that key code.
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.add('playing');
+  }
+
+  function removeTransition(e){
+  if(e.propertyName != 'transform') return; // Skip
+  this.classList.remove('playing');                   // This is equal to the object that it got called against (key)
+  console.log(e);
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
 
 </script>
 

@@ -10,6 +10,7 @@
 
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+    const name = 'Gaz'
 
     function makeGreen() {
       const p = document.querySelector('p');
@@ -18,28 +19,57 @@
     }
 
     // Regular
+    console.log('hello');
 
     // Interpolated
+    console.log(`Hello I am ${name} `);
 
     // Styled
+    console.log(`%c This is text`, `font-size: 50px; color: red;`);
 
     // warning!
-
+    console.warn(`oh no!!!`);
     // Error :|
-
+    console.error(`ERROR!!`);
     // Info
-
-    // Testing
-
+    console.info(`info`);
+    // Testing - Only displayed if statement is false
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('ouch'), `You did it wrong`);
     // clearing
-
+    console.clear();
     // Viewing DOM Elements
-
+    console.dir(p);
     // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`); // Start Group
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.groupEnd(`${dog.name}`); // End Group
+    });
 
     // counting
+    console.count(`Gaz`);
+    console.count(`Jack`);
+    console.count(`Gaz`);
+    console.count(`Jack`);
+    console.count(`Gaz`);
+    console.count(`Craig`);
+    console.count(`Gaz`);
 
-    // timing
+    // timing - See how long somthing takes
+    console.time(`fetching data`);
+    fetch(`https://api.github.com/users/wesbos`)
+    .then(blob => blob.json())
+    .then(data => {
+      console.timeEnd(`fetching data`);
+      console.log(data);
+    });
+
+
+
+    // Table - Takes an array of objects and assuming they alll have same properties you can put in a table
+    console.table(dogs);
 
   </script>
 </body>

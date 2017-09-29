@@ -7,6 +7,53 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+let hue = 0;
+let direction = true;
+
+const canvas = document.querySelector('#draw');
+const ctx = canvas.getContext('2d');
+ctx.lineJoin = 'miter';
+ctx.lineCap = 'round';
+ctx.lineWidth = 100;
+
+function draw(e){
+  if(!isDrawing) return;                      // Stops function from executing when not clicked down
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`; // [ Colour 0-360, Saturation%, Brightness% ]
+  ctx.beginPath();                            // Begins/resets a current path
+  ctx.moveTo(lastX, lastY);                   // Moves path without creating a line
+  ctx.lineTo(e.offsetX, e.offsetY);           // Where to draw to
+  ctx.stroke();                               // Puts line on page.
+  [lastX, lastY] = [e.offsetX, e.offsetY];    // Update last X and Y (ES6)
+
+  // Handle line color
+  hue++;
+  if(hue >= 360){
+    hue = 0
+  }
+  // Handle line width
+  if(ctx.lineWidth >= 100 || ctx.lineWidth <= 1){
+    direction = !direction;
+  }
+
+  if (direction) {
+    ctx.lineWidth++;
+  } else {
+    ctx.lineWidth--; 
+  }
+}
+
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mousedown', (e) => {
+  isDrawing = true; // Is Drawing
+  [lastX, lastY] = [e.offsetX, e.offsetY]; // Update to current position when mouse was clicked down
+
+}); 
+canvas.addEventListener('mouseup', () => isDrawing = false);  // Handle mouse click end
+canvas.addEventListener('mouseout', () => isDrawing = false); // Handle mouse leaving the canvas
+
 </script>
 
 <style>

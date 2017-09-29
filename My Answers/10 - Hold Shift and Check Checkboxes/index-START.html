@@ -99,6 +99,24 @@
   </div>
 
 <script>
+    const checkboxes = document.querySelectorAll('input[type=checkbox]');
+    let lastClicked;
+    let inBetween = false;
+
+    function handleCheck(e){
+      if(e.shiftKey && this.checked){                           // If shift is pressed and this clicked checkbox has been checked
+        checkboxes.forEach(checkbox => {                        // Loop through all checkboxes
+          if(checkbox === this || checkbox === lastClicked){    // Check if inbetween the two that have been clicked
+            inBetween = !inBetween;                             // Change current state of loop
+          }
+          if(inBetween){                                        // When looping through if currently inbetween then check the checkbox
+            checkbox.checked = true;
+          }
+        });
+      }
+      lastClicked = this;                                       // Update the last clicked
+    }
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck)); // 
 </script>
 </body>
 </html>

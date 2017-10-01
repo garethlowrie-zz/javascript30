@@ -7,6 +7,22 @@
 </head>
 <body>
 <script>
+
+const currentlyPressed = [];
+const word = 'secret';
+
+window.addEventListener('keyup', (e) => {
+  console.log(e.key);
+  currentlyPressed.push(e.key);
+  currentlyPressed.splice(-word.length-1, currentlyPressed.length - word.length);
+  console.log(currentlyPressed);
+
+  if(currentlyPressed.join('').includes(word)){
+    console.log(`Found`);
+    cornify_add();
+  }
+})
+
 </script>
 </body>
 </html>

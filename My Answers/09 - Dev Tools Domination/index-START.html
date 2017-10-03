@@ -57,16 +57,19 @@
     console.count(`Craig`);
     console.count(`Gaz`);
 
+    let wesbos = [];
+
     // timing - See how long somthing takes
     console.time(`fetching data`);
     fetch(`https://api.github.com/users/wesbos`)
     .then(blob => blob.json())
     .then(data => {
+      wesbos = data;
       console.timeEnd(`fetching data`);
       console.log(data);
     });
 
-
+    console.log(wesbos);
 
     // Table - Takes an array of objects and assuming they alll have same properties you can put in a table
     console.table(dogs);

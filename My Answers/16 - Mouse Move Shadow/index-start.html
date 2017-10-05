@@ -35,6 +35,35 @@
   </style>
 
 <script>
+  const hero = document.querySelector('.hero');
+  const text = hero.querySelector('h1');
+  const walk = 100; // 100px
+  function shadow(e){
+    // Get width and height
+    const { offsetWidth: width, offsetHeight: height} = hero; // Take the offsetWidth and offsetHeight values from hero and assign them to width and height
+    let { offsetX: x, offsetY: y } = e; // Take the offsetX and offsetY values from e and assign them to x and y
+    
+    
+    if(this !== e.target){ // Statement to execute when moving mouse outside of hero
+      x = x + e.target.offsetLeft; // Add distance between left and hero
+      y = y + e.target.offsetTop; // Add distance between top and hero
+    }
+    console.log(x, y);
+
+
+    const xWalk = Math.round((x / width * walk) - (walk / 2));
+    const yWalk = Math.round((y / height * walk) - (walk / 2));
+    
+    text.style.textShadow = `
+      ${xWalk}px ${yWalk}px 0 rgba(255,0,255,0.7),
+      ${xWalk * -1}px ${yWalk}px 0 rgba(20,0,255,0.7),
+      ${yWalk}px ${yWalk * -1}px 0 rgba(0,255,255,0.7),
+      ${yWalk * -1}px ${yWalk}px 0 rgba(20,0,120,0.7)
+    `;
+  
+  }
+
+  hero.addEventListener('mousemove', shadow);
 </script>
 </body>
 </html>

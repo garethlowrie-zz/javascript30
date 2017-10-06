@@ -12,6 +12,11 @@ body {
   box-sizing: inherit;
 }
 
+/* When fixed nav applied */
+.fixed-nav .site-wrap{
+  transform: scale(1);
+}
+
 .site-wrap {
   max-width: 700px;
   margin: 70px auto;
@@ -20,7 +25,7 @@ body {
   text-align: justify;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
   transform: scale(0.98);
-  transition: transform 0.5s;
+  transition: transform 2s;
 }
 
 header {
@@ -48,6 +53,12 @@ nav {
   z-index: 1;
 }
 
+/* When fixed nav applied */
+.fixed-nav nav {
+  position: fixed;
+  box-shadow: 0 5px rgba(0, 0, 0, 0.1);
+}
+
 nav ul {
   margin: 0;
   padding:0;
@@ -67,9 +78,14 @@ li.logo {
   max-width:0;
   overflow: hidden;
   background: white;
-  transition: all .5s;
+  transition: all 2s;
   font-weight: 600;
   font-size: 30px;
+}
+
+/* When fixed nav applied */
+.fixed-nav li.logo {
+  max-width: 500px;
 }
 
 li.logo a {

@@ -54,6 +54,22 @@
   </div>
 
 <script>
+  const nav = document.querySelector('#main');  // Get nav
+  const logo = nav.querySelector('.logo');      // Get logo
+  const navTop = nav.offsetTop;                 // Get distance from top of window onload
+
+  function fixedNavigation(){
+    if(window.scrollY >= navTop){               // When user has scrolled past nav
+      document.body.classList.add('fixed-nav'); // Add fixed-nav class to <body>
+      document.body.style.paddingTop = nav.offsetHeight + 'px'; // Add padding the same height as nav to prevent the content jumping up when nav moves position
+    }
+    else{
+      document.body.classList.remove('fixed-nav');  // Remove fixed-nav class
+      document.body.style.paddingTop = 0;           // Remove padding applied earlier when putting nav back
+    }
+  }
+
+  window.addEventListener('scroll', fixedNavigation);
 
 </script>
 

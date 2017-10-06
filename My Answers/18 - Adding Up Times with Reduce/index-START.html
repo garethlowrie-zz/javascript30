@@ -182,6 +182,26 @@
     </li>
   </ul>
 <script>
+  const timeItems = document.querySelectorAll('[data-time]');
+
+  const seconds = [...timeItems]                                // Create an array using ES6 spread
+    .map(node => node.dataset.time)                             // Create array of the time values
+    .map(timeCode => {                                          // Create a further array  returning the time in its value as seconds
+      const [mins, secs] = timeCode.split(':').map(parseFloat); // Split mins and seconds
+      return (mins * 60) + secs;                                // Return total seconds
+    })
+    .reduce((total, seconds) => total + seconds);               // Tally all the seconds
+
+    let secondsLeft = seconds;                                  // Total seconds
+
+    const hours = Math.floor(secondsLeft/3600);                 // Calculate hours
+    secondsLeft = secondsLeft % 3600;                           // Update seconds remaining
+
+    const minutes = Math.floor(secondsLeft/60);                 // Calculate minutes of remaining seconds
+    secondsLeft = secondsLeft % 60;                             // Update seconds remaining
+ 
+    console.log(hours + ':'  +  minutes + ':' + secondsLeft);   // Outut HH:MM:SS
+
 </script>
 </body>
 </html>

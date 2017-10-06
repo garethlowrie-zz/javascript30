@@ -27,6 +27,37 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+
+    const triggers = document.querySelectorAll('a');
+
+    // Make the highlight object
+    const highlighter = document.createElement('span');
+    highlighter.classList.add('highlight');
+    document.body.append(highlighter);
+
+
+    function highlightLink(){
+      console.log(this);
+
+      const linkCoords = this.getBoundingClientRect(); // Get top, left, bottom, right, width, height
+
+      // Must include scroll coordinates  (update top and left)
+      const coordinates = {
+        width: linkCoords.width,
+        height: linkCoords.height,
+        top: linkCoords.top + scrollY,
+        left: linkCoords.left + scrollX
+      }
+
+      highlighter.style.width = `${coordinates.width}px`;
+      highlighter.style.transform = `translate(${coordinates.left}px, ${coordinates.top}px)`;
+      highlighter.style.height = `${coordinates.height}px`;
+
+    }
+
+    triggers.forEach(trigger => trigger.addEventListener('mouseenter', highlightLink))
+
+
   </script>
 </body>
 </html>

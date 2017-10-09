@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Follow Along Nav</title>
+</head>
+<body>
+
+    <nav class="nav">
+        <div id="background">
+            <span id="background-arrow"></span>
+        </div>
+
+        <ul id="navigation">
+            <li>
+                <a href="#">Technology</a>
+                <ul class="dropdown">
+                    <li>
+                        Data Manager
+                    </li>
+                    <li>
+                        Content Manager
+                    </li>
+                    <li>
+                        Message Manager
+                    </li>
+                </ul> 
+            </li>
+            <li>
+                <a href="#">Services</a>
+                <ul class="dropdown">
+                    <li>
+                        Onboarding
+                    </li>
+                    <li>
+                        Training
+                    </li>
+                    <li>
+                        Account Management
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Success Stores</a>
+                <ul class="dropdown">
+                    <li>
+                        Case Studies
+                    </li>
+                    <li>
+                        The Clicks Awards
+                    </li>
+                    <li>
+                        The Other Awards
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+<style>
+
+body{
+    font-family: Arial;
+    background-image: url('http://communicator-website.azurewebsites.net/sites/comms/files/styles/hero_image/public/homepage_3.jpg?itok=FzTnlmE2');
+    background-size: cover;
+    background-repeat: no-repeat no-repeat;
+    color: white;
+
+}
+
+body:before{
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: rgba(0,0,0,.4);
+}
+
+nav{
+    position: relative;
+    perspective: 600px;
+}
+
+nav a{
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 2px 20px;
+    display: inline-block;
+    margin: 30px;
+    border-radius: 5px;
+}
+
+nav > ul {
+    display: flex;
+    justify-content: center;
+}
+
+nav > ul > li{
+    line-height: 1.6;
+    position: relative;
+    display:flex;
+    flex-direction: column;
+}
+
+.dropdown{
+    opacity: 0;
+    position: absolute;
+    overflow: hidden;
+    padding:20px;
+    top:-20px;
+    border-radius:2px;
+    transition: all 0.5s;
+    transform: translateY(100px);
+    will-change: opacity; /* h/w acceleration */
+    display: none;
+}
+
+.menu-active .dropdown{
+    display: block;
+}
+
+.trigger-menu-active .dropdown{
+    opacity: 1;
+}
+
+ul{
+    padding: 0;
+    list-style-type: none;
+}
+
+
+
+#background{
+    width:100px;
+    height:100px;
+    position: absolute;
+    background-color: #005694;
+    background-image: linear-gradient(to top,#00477b,#005694);
+    box-shadow: 0 11px 10px -2px rgba(0,0,0,.4);
+    border-radius: 4px;
+    box-shadow: 0 50px 100px rgba(50,50,93,.1), 0 15px 35px rgba(50,50,93,.15), 0 5px 15px rgba(0,0,0,.1);
+    transition:all 0.3s, opacity 0.1s, transform 0.2s;
+    transform-origin: 50% 0;
+    display: flex;
+    justify-content: center;
+    opacity:0;
+}
+#background.open{
+    opacity:1;
+}
+
+#background-arrow {
+    position: absolute;
+    width:20px;
+    height:20px;
+    display: block;
+    background: #005694;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+</style>
+
+<script>
+const menuItems = document.querySelectorAll('#navigation > li');
+const background = document.querySelector('#background');
+const nav = document.querySelector('.nav');
+
+function mouseEnter(e){
+    // Get list
+    this.classList.add('menu-active');
+
+    // Smooth Animation / Delay the opacity
+    setTimeout(() => this.classList.contains('menu-active') && this.classList.add('trigger-menu-active'), 200);
+    // Make background visible
+    background.classList.add('open');
+    // Move background
+    const dropdown = this.querySelector('.dropdown');
+    const dropdownCoords = dropdown.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+
+    const coordinates = {
+        width: dropdownCoords.width,
+        height: dropdownCoords.height,
+        top: dropdownCoords.top - navCoords.top,
+        left: dropdownCoords.left - navCoords.left
+    };
+
+    background.style.setProperty('width', `${coordinates.width}px`);
+    background.style.setProperty('height', `${coordinates.height}px`);
+    background.style.setProperty('transform', `translate(${coordinates.left}px, ${coordinates.top}px)`);
+}
+
+function mouseLeave(e){
+    this.classList.remove('menu-active', 'trigger-menu-active');
+    background.classList.remove('open');
+}
+
+menuItems.forEach(menuItem => menuItem.addEventListener('mouseenter', mouseEnter ));
+menuItems.forEach(menuItem => menuItem.addEventListener('mouseleave', mouseLeave ));
+
+
+</script>
+
+</body>
+</html>
+    
